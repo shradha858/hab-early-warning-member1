@@ -1,0 +1,19 @@
+HAB Early-Warning System - Baseline Model
+-----------------------------------------
+Model: Random Forest Classifier
+Forecast horizon: 5 days
+Train/test split: Chronological 80/20
+
+Training samples: 12
+Testing samples: 3
+
+Accuracy: 1.0000
+Precision: 0.0000
+Recall: 0.0000
+F1 Score: 0.0000
+
+Confusion Matrix:
+[[3 0]
+ [0 0]]
+
+NOTE: These metrics were generated using mock data only for pipeline verification. They are not scientific project results.

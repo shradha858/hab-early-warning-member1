@@ -1,0 +1,23 @@
+# Large/raw datasets
+data/sentinel2/raw/
+data/sentinel2/processed/*.tif
+data/environmental/raw/
+*.nc
+*.tif
+*.zip
+
+# Secrets / credentials
+.env
+*.key
+*.pem
+.cdsa*
+credentials*
+token*
+
+# Python
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+
+# OS/editor
+.DS_Store
