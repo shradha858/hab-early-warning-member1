@@ -162,6 +162,30 @@ def train_baseline(train, test):
     )
 
 
+
+def classify_risk(probability):
+    """
+    Convert model-estimated bloom probability into a
+    provisional early-warning risk category.
+
+    IMPORTANT:
+    These thresholds are prototype operational thresholds.
+    They are NOT scientifically calibrated HAB thresholds.
+
+    Final thresholds must be validated using real labeled
+    HAB data and temporal validation.
+    """
+
+    if probability < 0.30:
+        return "LOW"
+
+    elif probability < 0.60:
+        return "MEDIUM"
+
+    else:
+        return "HIGH"
+
+
 def save_results(
     train,
     test,
@@ -199,6 +223,9 @@ def save_results(
 
         "bloom_probability_percent":
             [p * 100 for p in bloom_probabilities],
+
+        "risk_level":
+            [classify_risk(p) for p in bloom_probabilities],
 
         "predicted_bloom":
             predictions
@@ -402,6 +429,7 @@ def main():
         "feature_date",
         "target_date",
         "bloom_probability_percent",
+        "risk_level",
         "actual_bloom",
         "predicted_bloom"
     ]].copy()

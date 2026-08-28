@@ -36,3 +36,27 @@ Columns:
 Columns:
 
 `date,lat,lon,chlorophyll_a,sst,rainfall,wind_speed`
+
+
+## 5-Day Bloom Probability and Risk Level
+
+The Random Forest baseline also produces a model-estimated probability
+of bloom occurrence five days ahead using `predict_proba()`.
+
+Prototype risk categories are currently:
+
+- LOW: probability < 30%
+- MEDIUM: probability >= 30% and < 60%
+- HIGH: probability >= 60%
+
+These risk thresholds are PROVISIONAL operational thresholds for
+prototype demonstration only. They are not scientifically validated
+HAB thresholds.
+
+Once sufficient real labeled HAB data is available, probability and
+alert thresholds will be evaluated and calibrated using chronological
+validation and appropriate classification metrics such as precision,
+recall, F1-score, ROC-AUC and/or Precision-Recall analysis.
+
+Current mock-data probabilities and evaluation metrics are used only
+to verify that the end-to-end forecasting pipeline functions correctly.
