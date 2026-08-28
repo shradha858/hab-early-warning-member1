@@ -112,6 +112,15 @@ def train_baseline(train, test):
         X_test
     )
 
+    # Model-estimated probability of bloom class (1)
+    probability_matrix = model.predict_proba(X_test)
+
+    if 1 in model.classes_:
+        bloom_class_index = list(model.classes_).index(1)
+        bloom_probabilities = probability_matrix[:, bloom_class_index]
+    else:
+        bloom_probabilities = [0.0] * len(X_test)
+
     accuracy = accuracy_score(
         y_test,
         predictions
@@ -144,6 +153,7 @@ def train_baseline(train, test):
     return (
         model,
         predictions,
+        bloom_probabilities,
         accuracy,
         precision,
         recall,
@@ -156,6 +166,7 @@ def save_results(
     train,
     test,
     predictions,
+    bloom_probabilities,
     accuracy,
     precision,
     recall,
@@ -182,6 +193,12 @@ def save_results(
             test[
                 "bloom_label_t_plus_5"
             ].astype(int).values,
+
+        "bloom_probability":
+            bloom_probabilities,
+
+        "bloom_probability_percent":
+            [p * 100 for p in bloom_probabilities],
 
         "predicted_bloom":
             predictions
@@ -312,6 +329,7 @@ def main():
     (
         model,
         predictions,
+        bloom_probabilities,
         accuracy,
         precision,
         recall,
@@ -360,6 +378,7 @@ def main():
         train,
         test,
         predictions,
+        bloom_probabilities,
         accuracy,
         precision,
         recall,
@@ -376,10 +395,22 @@ def main():
     )
 
     print(
-        "\nActual vs Predicted:"
+        "\n--- 5-DAY BLOOM FORECAST ---"
     )
 
-    print(results)
+    display_results = results[[
+        "feature_date",
+        "target_date",
+        "bloom_probability_percent",
+        "actual_bloom",
+        "predicted_bloom"
+    ]].copy()
+
+    display_results["bloom_probability_percent"] = (
+        display_results["bloom_probability_percent"].round(2)
+    )
+
+    print(display_results)
 
 
 if __name__ == "__main__":
